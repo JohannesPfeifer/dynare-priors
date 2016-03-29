@@ -1,0 +1,117 @@
+\documentclass{amsart}
+
+\usepackage[utf8]{inputenc}
+
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+
+\numberwithin{equation}{section}
+
+\setlength\parindent{0pt} % No identation in all document.
+
+\begin{document}
+
+\title{Prior distributions in Dynare}
+\author{Stéphane Adjemian}
+\address{Université du Maine}
+\email{stepan@dynare.org}
+\date{April, 2016}
+
+\maketitle
+
+\section{Gamma distributions}
+
+\begin{definition}
+  The Gamma function is defined as follows:
+  \[
+    \Gamma(n) = \int_0^{\infty}x^{n-1}e^{-x}\mathrm d x
+  \]
+  for any $x>0$, zero elsewhere.
+\end{definition}
+
+One can easily prove that the foillowing identities hold:
+$\Gamma(1) = 1$, $\Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}$ and
+$\Gamma(n)=(n-1)\Gamma(n-1)$.
+
+\begin{definition}
+  A positive real random variable has a gamma distribution with
+  parameters $\alpha>0$ (shape) and $\beta>0$ (scale) if and only of
+  its probability density function is given by the following equation:
+  \[
+    f(x)=C(\alpha,\beta)^{-1} \times x^{\alpha-1}e^{-\frac{x}{\beta}}
+  \]
+  where $C(\alpha, \beta) = \Gamma(\alpha)\beta^{\alpha}$ is the constant of
+  integration.
+\end{definition}
+ We will denote $X\sim G(\alpha, \beta)$.  In Dynare this
+ distribution may be specified as a prior in the estimated params
+ block (using the keyword \verb+GAMMA_PDF+). The user has to specify the
+ expectation and standard deviation of the distribution.
+
+ \begin{proposition}
+   \label{GammaDistributionMoments}
+   If $X\sim G(\alpha, \beta)$, then the expectation and variance of $X$ are:
+   \[
+     \begin{split}
+       \mu &= \alpha\beta \\
+       \sigma^2 &= \alpha\beta^2
+     \end{split}
+   \]
+ \end{proposition}
+
+ \begin{proof}[Proof of proposition \ref{GammaDistributionMoments}]
+   By definition the expectation is given by:
+   \[
+     \begin{split}
+       \mu &= C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha}e^{-\frac{x}{\beta}}\mathrm d x \\
+       &= C(\alpha,\beta)^{-1}C(1+\alpha,\beta) \\
+       &= \frac{\Gamma(1+\alpha)\beta^{1+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
+       &= \frac{\alpha\Gamma(\alpha)\beta^{1+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
+       &= \alpha\beta
+     \end{split}
+   \]
+   The second order moment is given by:
+   \[
+     \begin{split}
+       \mathbb E [X^2] &= C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha+1}e^{-\frac{x}{\beta}}\mathrm d x \\
+       &= C(\alpha,\beta)^{-1}C(2+\alpha,\beta) \\
+       &= \frac{(\alpha+1)\alpha\Gamma(\alpha)\beta^{2+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
+       &= \alpha(\alpha+1)\beta^2 
+     \end{split}
+   \]
+   and the variance:
+   \[
+     \mathbb V[X] = \alpha(\alpha+1)\beta^2 - \alpha^2\beta^2 = \alpha\beta^2
+   \]
+ \end{proof}
+ 
+ \begin{remark}
+   Dynare computes the hyperparameters $\alpha$ and $\beta$ by
+   inverting the formulas given in proposition
+   \ref{GammaDistributionMoments}, we have:
+   \[
+     \begin{split}
+       \alpha &= \frac{\mu^2}{\sigma^2} \\
+       \beta &= \frac{\sigma^2}{\mu}
+     \end{split}
+   \]
+ \end{remark}
+
+ \begin{proposition}
+   The mode of $X\sim G(\alpha, \beta)$ is:
+   \[
+     m = 
+     \begin{cases}
+       0 &\text{if } \alpha\leq 1\text{,} \\
+       (\alpha-1)\beta &\text{otherwise.}
+     \end{cases}
+   \]
+ \end{proposition}
+\end{document}
