@@ -45,9 +45,9 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
   parameters $\alpha>0$ (shape) and $\beta>0$ (scale) if and only of
   its probability density function is given by the following equation:
   \[
-    f(x)=C(\alpha,\beta)^{-1} \times x^{\alpha-1}e^{-\frac{x}{\beta}}
+    f(x)=\mathcal C(\alpha,\beta)^{-1} \times x^{\alpha-1}e^{-\frac{x}{\beta}}
   \]
-  where $C(\alpha, \beta) = \Gamma(\alpha)\beta^{\alpha}$ is the constant of
+  where $\mathcal C(\alpha, \beta) = \Gamma(\alpha)\beta^{\alpha}$ is the constant of
   integration.
 \end{definition}
  We will denote $X\sim G(\alpha, \beta)$.  In Dynare this
@@ -70,8 +70,8 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
    By definition the expectation is given by:
    \[
      \begin{split}
-       \mu &= C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha}e^{-\frac{x}{\beta}}\mathrm d x \\
-       &= C(\alpha,\beta)^{-1}C(1+\alpha,\beta) \\
+       \mu &= \mathcal C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha}e^{-\frac{x}{\beta}}\mathrm d x \\
+       &= \mathcal C(\alpha,\beta)^{-1}\mathcal C(1+\alpha,\beta) \\
        &= \frac{\Gamma(1+\alpha)\beta^{1+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
        &= \frac{\alpha\Gamma(\alpha)\beta^{1+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
        &= \alpha\beta
@@ -80,8 +80,8 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
    The second order moment is given by:
    \[
      \begin{split}
-       \mathbb E [X^2] &= C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha+1}e^{-\frac{x}{\beta}}\mathrm d x \\
-       &= C(\alpha,\beta)^{-1}C(2+\alpha,\beta) \\
+       \mathbb E [X^2] &= \mathcal C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha+1}e^{-\frac{x}{\beta}}\mathrm d x \\
+       &= \mathcal C(\alpha,\beta)^{-1}\mathcal C(2+\alpha,\beta) \\
        &= \frac{(\alpha+1)\alpha\Gamma(\alpha)\beta^{2+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
        &= \alpha(\alpha+1)\beta^2 
      \end{split}
