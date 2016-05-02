@@ -115,4 +115,53 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
      \end{cases}
    \]
  \end{proposition}
+
+ \begin{proof}[Proof of proposition \ref{GammaDistributionMode}]
+   We have:
+   \[
+     \begin{split}
+     \frac{\mathrm d}{\mathrm dx} f(x) &= \mathcal{C}(\alpha,\beta)^{-1}
+     \times
+     \left\{
+         (\alpha-1)x^{\alpha-2}e^{-\frac{x}{\beta}}-\frac{1}{\beta}x^{\alpha-1}e^{-\frac{x}{\beta}}
+     \right\} \\
+      &= \mathcal{C}(\alpha,\beta)^{-1} x^{\alpha-1}e^{-\frac{x}{\beta}}
+      \times
+      \left\{ -\frac{1-\alpha}{x}-\frac{1}{\beta} \right\} \\
+     \end{split}
+   \]
+   If $\alpha\leq 1$ the density is monotone decreasing and we have a vertical asymptote at zero. Consequently, if $\alpha\leq 1$ we must have $m=0$. If the shape parameter is greater than one, the previous derivative is non negative if and only if:
+   \[
+     -\frac{1-\alpha}{x}-\frac{1}{\beta}\geq 0
+   \]
+   or equivalently:
+   \[
+     x \leq (\alpha-1)\beta
+   \]
+   If the shape parameter is greater than one, $\alpha>1$, we have $m=(\alpha-1)\beta$. If the shape parameter is equal to one, the mode is also zero but without vertical asymptot (the slope of the density is null at zero). 
+ \end{proof}
+
+ \begin{remark}
+   With an asymmetric distribution one may prefer to define the hyperparameters from the mode and the variance (instead of the mean and the variance). Assuming that $\alpha>1$, we have:
+   \[
+     \begin{cases}
+       m &= (\alpha-1)\beta\\
+       \sigma^2 &= \alpha\beta^2
+     \end{cases}
+     \Leftrightarrow
+     \begin{cases}
+       \alpha &= 1+\frac{m}{\beta} \\
+       0 &= \beta^2+m\beta-\sigma^2
+     \end{cases}
+   \]
+   The quadratic equation has always two distinct real solutions of opposite sign. Selecting the positive solution (because the scale parameter $\beta$ has to be positive), we obtain:
+   \[
+     \begin{split}
+       \alpha &= 1 - \frac{2}{1-\sqrt{1+4\left(\frac{\sigma}{m}\right)^2}}\\
+       \beta &= -\frac{m}{2}\left(1-\sqrt{1+4\left(\frac{\sigma}{m}\right)^2}\right)
+     \end{split}
+   \]
+   If the shape parameter is not greater than one, $\alpha\leq 1$, then we cannot identify uniquely the two hyperparameters from the mode and the variance (we have a continuum of possible values for $\alpha$ and $\beta$).
+ \end{remark}
+
 \end{document}
