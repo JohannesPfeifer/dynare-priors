@@ -166,4 +166,129 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
    If the shape parameter is not greater than one, $\alpha\leq 1$, then we cannot identify uniquely the two hyperparameters from the mode and the variance (we have a continuum of possible values for $\alpha$ and $\beta$).
  \end{remark}
 
+
+\subsection{Gamma types 2 and 1 distributions}
+
+\begin{definition}
+  Let $X>0$ gamma random variable parameterized by a shape $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$, and say that $X$ has a gamma-2 distribution. 
+\end{definition}
+
+\begin{definition}
+  Let $Y = \sqrt{X}$ with $X\sim G_2(\nu, s)$, we say that $Y$ has a gamma-1 distribution, $Y\sim G_1(\nu, s)$. 
+\end{definition}
+
+These distributions are not implemented in Dynare but can be easily built from the gamma distribution.
+
+ \begin{proposition}
+   \label{GammaDistribution:type1and2:densities}
+   The densities of the gamma-2 and gamma-1 are respectively:
+   \[
+     f_X(x) = \mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}x^{\frac{\nu}{2}-1}e^{-\frac{sx}{2}}
+   \]
+   and
+   \[
+     f_Y(y) = \widetilde{\mathcal C}\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-1}e^{-\frac{s}{2}y^2}
+   \]
+   where $\widetilde{\mathcal C}(\alpha,\beta) = \frac{1}{2}\mathcal C(\alpha,\beta)$.
+ \end{proposition}
+
+\begin{proof}[Proof of proposition \ref{GammaDistribution:type1and2:densities}]
+The density of the gamma-2 distribution is easily obtained from the density of the gamma distribution, and the first two moments of this distribution are given by proposition \ref{GammaDistributionMoments}. The density of the gamma-1 distribution is given by:
+\[
+f_Y(y) = f_X\left(h^{-1}(y)\right)\times \left|\frac{\mathrm d}{\mathrm d y}h^{-1}(y)\right|
+\]
+by applying the change of variable formula, where $h(x) = \sqrt{x}$, and $f_X(x)$ is the density of the gamma-2 distribution. Substituting $f_X$ and the reciprocal of $h$ in the definition of $f_Y$, we get:
+\[
+  \begin{split}
+    f_Y(y) &= \mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-2}e^{-\frac{s}{2}y^2}\times \left| \frac{\mathrm d}{\mathrm d y}y^2\right|\\
+    \Leftrightarrow f_Y(y) &= 2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-1}e^{-\frac{s}{2}y^2}
+  \end{split}
+\]
+with $2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1} = \widetilde{\mathcal C}\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}$.
+\end{proof}
+
+\begin{proposition}
+   \label{GammaDistribution:type2:moments}
+   If $X\sim G_2(\nu, s)$, then the expectation and variance of $X$ are:
+   \[
+     \mu = \frac{\nu}{s}
+   \]
+   \[
+     \sigma^2 = \frac{2\nu}{s^2}
+   \]
+ \end{proposition}
+
+ \begin{proof}[Proof of proposition \ref{GammaDistribution:type2:moments}]
+   Direct by substituting the definition of the gamma-2 distribution in proposition \ref{GammaDistributionMoments}.
+ \end{proof}
+
+\begin{proposition}
+   \label{GammaDistribution:type1:moments}
+   If $X\sim G_1(\nu, s)$, then the expectation and variance of $X$ are:
+   \[
+     \mu = \sqrt{\frac{\nu}{s}}\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)}
+   \]
+   \[
+     \sigma^2 = \frac{\nu}{s} - \mu^2
+   \]
+ \end{proposition}
+
+ \begin{proof}[Proof of proposition \ref{GammaDistribution:type1:moments}]
+By definition, we have:
+\[
+  \begin{split}
+    \mu &= \widetilde{\mathcal C}\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}\int_0^{\infty}y^{\nu}e^{-\frac{s}{2}y^2}\mathrm dy\\
+    &=\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}\int_{0}^{\infty}x^{\frac{\nu}{2}-\frac{1}{2}}e^{-\frac{s}{2}x}\mathrm d x\\
+    &= \frac{\Gamma\left(\frac{\nu}{2}+\frac{1}{2}\right)\left(\frac{2}{s}\right)^{\frac{\nu}{2}+\frac{1}{2}}}{\Gamma\left(\frac{\nu}{2}\right)\left(\frac{2}{s}\right)^{\frac{\nu}{2}}}
+  \end{split}
+\]
+So that
+\[
+\mu = \sqrt{\frac{\nu}{s}}\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)}
+\]
+For the second order moment, we have by definitions of the gamma-1 and gamma-2 distributions:
+\[
+\mathbb E\left[Y^2\right] = \mathbb E [X]
+\]
+where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, we obtain:
+\[
+\mathbb E\left[Y^2\right] = \frac{\nu}{s}
+\]
+ \end{proof}
+
+ \subsection{Chi-squared and Exponential distributions}
+ A number of distributions may be defined as special cases of the
+ Gamma distribution. A chi-squared distribution with $\nu$ degrees of
+ freedom, $\chi^2(\nu)$, is a gamma distribution:
+ $G\left(\frac{\nu}{2},2\right)$. The chi-squared prior is not
+ implemented in dynare but obviously the user can obtain it by
+ carefully choosing the expectation and variance of the gamma prior
+ (that is, by setting $\mu=\nu$ and $\sigma^2 = 2\nu$). As long as the
+ variance is twice the expectation, the prior is a chi-squared
+ distribution. An exponential distribution with expectation
+ $\lambda^{-1}$, $\xi(\lambda)$, is also a gamma distribution:
+ $G\left(1,\frac{1}{\lambda}\right)$. Again the exponential prior is
+ not implemented in dynare but is obtained from the gamma distribution
+ as long as the prior expectation is the squared root of the prior
+ variance. As a consequence, by using the gamma prior and setting
+ $\mu=\sigma$ the user chooses a distribution whose mode is zero.
+
+ \subsection{Shifted Gamma distribution}
+ The support of the gamma distribution is by default the positive real
+ line. In \Dynare\ the user has the possibility to shift the support
+ if this distribution. This may be useful, for instance, if someone
+ wants to estimate the elasticity of substitution of a CES production
+ function with the (deterministic) belief that this elasticity has to
+ be greater than one (Cobb-Douglas technology). The density is then
+ defined with three parameters $\alpha>0$ (shape), $\beta>0$ (scale)
+ and $\delta\in\mathbb R$ (location, the lower bound of the
+ distribution’s support):
+ \[
+   f(x) = \mathcal C(\alpha, \beta)^{-1}(x-\delta)^{\alpha-1}e^{-\frac{x-\delta}{\beta}}
+ \]
+ where tghe constant of integration is defined as before. Obviously
+ this shift affects the first order moment ($\mu=\alpha\beta+\delta$)
+ and the mode (the same shift applies) but not the variance.\newline
+
+
 \end{document}
