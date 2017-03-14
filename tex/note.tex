@@ -28,7 +28,7 @@
 
 \maketitle
 
-\section{Gamma distributions}
+\section{Gamma distributions}\label{sec:GammaDistribution}
 
 \begin{definition}
   The Gamma function is defined as follows:
@@ -167,7 +167,7 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
  \end{remark}
 
 
-\subsection{Gamma types 2 and 1 distributions}
+\subsection{Gamma types 2 and 1 distributions}\label{subsec:GammaDistributionTypes}
 
 \begin{definition}
   Let $X>0$ gamma random variable parameterized by a shape $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$, and say that $X$ has a gamma-2 distribution. 
@@ -256,7 +256,7 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
 \]
  \end{proof}
 
- \subsection{Chi-squared and Exponential distributions}
+ \subsection{Chi-squared and Exponential distributions}\label{subsec:ChiAndExponentialDistributions}
  A number of distributions may be defined as special cases of the
  Gamma distribution. A chi-squared distribution with $\nu$ degrees of
  freedom, $\chi^2(\nu)$, is a gamma distribution:
@@ -273,7 +273,7 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
  variance. As a consequence, by using the gamma prior and setting
  $\mu=\sigma$ the user chooses a distribution whose mode is zero.
 
- \subsection{Shifted Gamma distribution}
+ \subsection{Shifted Gamma distribution}\label{subsec:ShiftedGammaDistribution}
  The support of the gamma distribution is by default the positive real
  line. In \Dynare\ the user has the possibility to shift the support
  if this distribution. This may be useful, for instance, if someone
