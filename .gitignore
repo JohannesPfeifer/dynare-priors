@@ -1,3 +1,4 @@
+tex/auto/*
 tex/note.aux
 tex/note.log
-tex/note.pdf
+*.pdf
