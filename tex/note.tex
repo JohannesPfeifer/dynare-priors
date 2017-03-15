@@ -168,21 +168,25 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
  \end{remark}
 
 
-\subsection{Gamma types 2 and 1 distributions}\label{subsec:GammaDistributionTypes}
+\subsection{Gamma distributions of types I and II}\label{subsec:GammaDistributionTypes}
 
 \begin{definition}
-  Let $X>0$ gamma random variable parameterized by a shape $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$, and say that $X$ has a gamma-2 distribution.
+  Let $X>0$ gamma random variable parameterized by a shape
+  $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote
+  $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$,
+  and say that $X$ has a gamma distribution of types II.
 \end{definition}
 
 \begin{definition}
-  Let $Y = \sqrt{X}$ with $X\sim G_2(\nu, s)$, we say that $Y$ has a gamma-1 distribution, $Y\sim G_1(\nu, s)$.
+  Let $Y = \sqrt{X}$ with $X\sim G_2(\nu, s)$, we say that $Y$ has a
+  gamma distribution of type I, $Y\sim G_1(\nu, s)$.
 \end{definition}
 
 These distributions are not implemented in Dynare but can be easily built from the gamma distribution.
 
  \begin{proposition}
    \label{GammaDistribution:type1and2:densities}
-   The densities of the gamma-2 and gamma-1 are respectively:
+   The densities of the gamma distributions of type II and I are respectively:
    \[
      f_X(x) = \mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}x^{\frac{\nu}{2}-1}e^{-\frac{sx}{2}}
    \]
@@ -194,18 +198,25 @@ These distributions are not implemented in Dynare but can be easily built from t
  \end{proposition}
 
 \begin{proof}[Proof of proposition \ref{GammaDistribution:type1and2:densities}]
-The density of the gamma-2 distribution is easily obtained from the density of the gamma distribution, and the first two moments of this distribution are given by proposition \ref{GammaDistributionMoments}. The density of the gamma-1 distribution is given by:
-\[
-f_Y(y) = f_X\left(h^{-1}(y)\right)\times \left|\frac{\mathrm d}{\mathrm d y}h^{-1}(y)\right|
-\]
-by applying the change of variable formula, where $h(x) = \sqrt{x}$, and $f_X(x)$ is the density of the gamma-2 distribution. Substituting $f_X$ and the reciprocal of $h$ in the definition of $f_Y$, we get:
-\[
-  \begin{split}
-    f_Y(y) &= \mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-2}e^{-\frac{s}{2}y^2}\times \left| \frac{\mathrm d}{\mathrm d y}y^2\right|\\
-    \Leftrightarrow f_Y(y) &= 2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-1}e^{-\frac{s}{2}y^2}
-  \end{split}
-\]
-with $2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1} = \widetilde{\mathcal C}\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}$.
+  The density of the gamma distribution of type II is easily obtained
+  from the density of the gamma distribution, and the first two
+  moments of this distribution are given by proposition
+  \ref{GammaDistributionMoments}. The density of the gamma
+  distribution of type I is given by:
+  \[
+    f_Y(y) = f_X\left(h^{-1}(y)\right)\times \left|\frac{\mathrm d}{\mathrm d y}h^{-1}(y)\right|
+  \]
+  by applying the change of variable formula, where $h(x) = \sqrt{x}$,
+  and $f_X(x)$ is the density of the gamma
+  distribution of type II. Substituting $f_X$ and the reciprocal of $h$ in the
+  definition of $f_Y$, we get:
+  \[
+    \begin{split}
+      f_Y(y) &= \mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-2}e^{-\frac{s}{2}y^2}\times \left| \frac{\mathrm d}{\mathrm d y}y^2\right|\\
+      \Leftrightarrow f_Y(y) &= 2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}y^{\nu-1}e^{-\frac{s}{2}y^2}
+    \end{split}
+  \]
+  with $2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1} = \widetilde{\mathcal C}\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1}$.
 \end{proof}
 
 \begin{proposition}
@@ -220,7 +231,7 @@ with $2\mathcal C\left(\frac{\nu}{2},\frac{2}{s}\right)^{-1} = \widetilde{\mathc
  \end{proposition}
 
  \begin{proof}[Proof of proposition \ref{GammaDistribution:type2:moments}]
-   Direct by substituting the definition of the gamma-2 distribution in proposition \ref{GammaDistributionMoments}.
+   Direct by substituting the definition of the gamma distribution of type II in proposition \ref{GammaDistributionMoments}.
  \end{proof}
 
 \begin{proposition}
@@ -247,7 +258,7 @@ So that
 \[
 \mu = \sqrt{\frac{\nu}{s}}\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)}
 \]
-For the second order moment, we have by definitions of the gamma-1 and gamma-2 distributions:
+For the second order moment, we have by definitions of the gamma distributions of types I and II:
 \[
 \mathbb E\left[Y^2\right] = \mathbb E [X]
 \]
@@ -287,14 +298,16 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
  \[
    f(x) = \mathcal C(\alpha, \beta)^{-1}(x-\delta)^{\alpha-1}e^{-\frac{x-\delta}{\beta}}
  \]
- where tghe constant of integration is defined as before. Obviously
+ where the constant of integration is defined as before. Obviously
  this shift affects the first order moment ($\mu=\alpha\beta+\delta$)
  and the mode (the same shift applies) but not the variance.\newline
 
 \section{Inverted Gamma distributions}\label{sec:InvertedGammaDistributions}
 
 \begin{definition}
-  Let $X$ be a gamma distributed random variable whith shape parameter $\alpha>0$ and scale parameter $\beta>0$. Then $Z = X^{-1}$ is said to be gamma inverted distributed, $Z\sim IG(\alpha, \beta)$.
+  Let $X$ be a gamma distributed random variable with shape parameter
+  $\alpha>0$ and scale parameter $\beta>0$. Then $Z = X^{-1}$ has an
+  inverted gamma inverted distribution, $Z\sim IG(\alpha, \beta)$.
 \end{definition}
 
 \begin{proposition}\label{InvertedGammaDensity}
@@ -306,7 +319,10 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
 \end{proposition}
 
 \begin{proof}[Proof of proposition \ref{InvertedGammaDensity}]
-  Let $f_X$ denote the density of the gamma distribution with shape and scale parameters $\alpha>0$ and $\beta>0$, and define $h(x) = \frac{1}{x}$. The density of the inverted gamma distribution is defined as follows:
+  Let $f_X$ denote the density of the gamma distribution with shape
+  and scale parameters $\alpha>0$ and $\beta>0$, and define
+  $h(x) = \frac{1}{x}$. The density of the inverted gamma distribution
+  is defined as follows:
   \[
     \begin{split}
       f(z) &= f_X(h^{-1}(z)) \times \left|\frac{\mathrm d}{\mathrm dz}h^{-1}(z)\right|\\
@@ -326,7 +342,8 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
   \]
 \end{proposition}
 
-Note that the variance is not defined for $\alpha<2$, when equality holds the variance is infinite.\newline
+Note that the variance is not defined for $\alpha<2$, when equality
+holds the variance is infinite.\newline
 
 \begin{proof}[Proof of proposition \ref{InvertedGammaMoments}]
   By definition of the probability density function of an Inverted Gamma distribution, we have:
@@ -392,7 +409,7 @@ This distribution is not implemented in \Dynare, but two special cases presented
 \end{proof}
 
 Again one may prefer to define this distribution by specifying the mode and the
-variance (see below for the inverse gamma-2 distribution). Note that it is also
+variance (see below for the inverse gamma distribution of type II). Note that it is also
 possible to define this distribution by specifying the expectation and the mode. We have:
 
 \[
@@ -423,10 +440,13 @@ and by substitution in the first equation:
 \beta = \frac{1}{2}\left(\frac{1}{m}-\frac{1}{\mu}\right) = \frac{\mu-m}{2\mu m}
 \]
 
-\subsection{Inverted Gamma of types 1 and 2}\label{sec:InvertedGammaDistributionsOfType1And2}
+\subsection{Inverted Gamma of types I and II}\label{sec:InvertedGammaDistributionsOfType1And2}
 
 \begin{definition}\label{InvertedGamma2}
-  Let $X>0$ be a real random variable with gamma-2 distribution, $X\sim G\left(\frac{\nu}{2},\frac{2}{s}\right)$. $Y = X^{-1}$ is said to have an inverted gamma of type 2 distribution, $Y\sim IG_2(\nu, s)$.
+  Let $X>0$ be a real random variable with gamma distribution of type II,
+  $X\sim G\left(\frac{\nu}{2},\frac{2}{s}\right)$. $Y = X^{-1}$ is
+  said to have an inverted gamma distribution of type II,
+  $Y\sim IG_2(\nu, s)$.
 \end{definition}
 
 \begin{proposition}\label{InvertedGamma2Density}
@@ -454,7 +474,7 @@ and by substitution in the first equation:
   Direct from proposition \ref{InvertedGammaMoments} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$.
 \end{proof}
 
-The inverted gamma type II distribution is implemented in \Dynare\ as a prior, using the
+The inverted gamma distribution of type II is implemented in \Dynare\ as a prior, using the
 keyword \verb+INV_GAMMA2_PDF+. The user has to specify $\mu$ and $\sigma$, and \Dynare\ solves the
 two equations given in proposition \ref{InvertedGamma2Moments} for the scale and shape parameters:
 
@@ -467,7 +487,7 @@ two equations given in proposition \ref{InvertedGamma2Moments} for the scale and
 
 This distribution is often used as a prior for the variance of a structural shock
 or measurement error. Note that the sole difference between an inverted gamma
-distribution and the inverted gamma type II distribution is in the parameterization of the
+distribution and the inverted gamma distribution of type II is in the parameterization of the
 shape and scale parameters. If the prior distribution is defined by its first and
 second moments, this difference does not matter.\newline
 
@@ -530,11 +550,14 @@ the mode formula given in proposition \ref{InvertedGamma2Mode}.
   third order polynomial has to be greater than four.
 \end{proof}
 
-In practice we instead usually define the priors over standard deviations, that is
-over the square root of the variance. This motivates the following definition.\newline
+In practice we instead usually define the priors over standard
+deviations, i.e. the square root of the variance. This motivates the
+following definition.\newline
 
 \begin{definition}\label{InvertedGamma1}
-  Let $X>0$ be a real random variable with gamma distribution of type I, $X\sim G_1\left(\nu,s\right)$. $Y = X^{-1}$ is said to have an inverted gamma distribution of type I, $Y\sim IG_1(\nu, s)$.
+  Let $X>0$ be a real random variable with gamma distribution of type
+  I, $X\sim G_1\left(\nu,s\right)$. $Y = X^{-1}$ is said to have an
+  inverted gamma distribution of type I, $Y\sim IG_1(\nu, s)$.
 \end{definition}
 
 \begin{proposition}\label{InvertedGamma1Density}
@@ -649,9 +672,10 @@ variance we have a closed form solution:
 
 The inverse gamma distribution of type I (type II) is usually used as
 a prior for the standard deviation (resp. variance) of a structural
-(or measurement) shock. The rational is that in linear model with
+(or measurement) shock. The rational is that in linear models with
 gaussian noise, the Normal (for the parameters) – Inverse Gamma
 (for the variance of the error) prior is conjugate. Obviously this is
 not true for DSGE models, there is no computational advantage in
 choosing the inverse gamma prior.
+
 \end{document}
