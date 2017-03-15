@@ -86,7 +86,7 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
        \mathbb E [X^2] &= \mathcal C(\alpha,\beta)^{-1}\int_{0}^{\infty}x^{\alpha+1}e^{-\frac{x}{\beta}}\mathrm d x \\
        &= \mathcal C(\alpha,\beta)^{-1}\mathcal C(2+\alpha,\beta) \\
        &= \frac{(\alpha+1)\alpha\Gamma(\alpha)\beta^{2+\alpha}}{\Gamma(\alpha)\beta^{\alpha}} \\
-       &= \alpha(\alpha+1)\beta^2 
+       &= \alpha(\alpha+1)\beta^2
      \end{split}
    \]
    and the variance:
@@ -94,7 +94,7 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
      \mathbb V[X] = \alpha(\alpha+1)\beta^2 - \alpha^2\beta^2 = \alpha\beta^2
    \]
  \end{proof}
- 
+
  \begin{remark}
    Dynare computes the hyperparameters $\alpha$ and $\beta$ by
    inverting the formulas given in proposition
@@ -111,7 +111,7 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
    \label{GammaDistributionMode}
    The mode of $X\sim G(\alpha, \beta)$ is:
    \[
-     m = 
+     m =
      \begin{cases}
        0 &\text{if } \alpha\leq 1\text{,} \\
        (\alpha-1)\beta &\text{otherwise.}
@@ -141,7 +141,7 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
    \[
      x \leq (\alpha-1)\beta
    \]
-   If the shape parameter is greater than one, $\alpha>1$, we have $m=(\alpha-1)\beta$. If the shape parameter is equal to one, the mode is also zero but without vertical asymptot (the slope of the density is null at zero). 
+   If the shape parameter is greater than one, $\alpha>1$, we have $m=(\alpha-1)\beta$. If the shape parameter is equal to one, the mode is also zero but without vertical asymptot (the slope of the density is null at zero).
  \end{proof}
 
  \begin{remark}
@@ -171,11 +171,11 @@ $\Gamma(n)=(n-1)\Gamma(n-1)$.
 \subsection{Gamma types 2 and 1 distributions}\label{subsec:GammaDistributionTypes}
 
 \begin{definition}
-  Let $X>0$ gamma random variable parameterized by a shape $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$, and say that $X$ has a gamma-2 distribution. 
+  Let $X>0$ gamma random variable parameterized by a shape $\frac{\nu}{2}>0$ and a scale $\frac{2}{s}>0$. We will denote $X\sim G_2(\nu, s) \equiv G\left(\frac{\nu}{2}, \frac{2}{s}\right)$, and say that $X$ has a gamma-2 distribution.
 \end{definition}
 
 \begin{definition}
-  Let $Y = \sqrt{X}$ with $X\sim G_2(\nu, s)$, we say that $Y$ has a gamma-1 distribution, $Y\sim G_1(\nu, s)$. 
+  Let $Y = \sqrt{X}$ with $X\sim G_2(\nu, s)$, we say that $Y$ has a gamma-1 distribution, $Y\sim G_1(\nu, s)$.
 \end{definition}
 
 These distributions are not implemented in Dynare but can be easily built from the gamma distribution.
@@ -426,7 +426,7 @@ and by substitution in the first equation:
 \subsection{Inverted Gamma of types 1 and 2}\label{sec:InvertedGammaDistributionsOfType1And2}
 
 \begin{definition}\label{InvertedGamma2}
-  Let $X>0$ be a real random variable with gamma-2 distribution, $X\sim G\left(\frac{\nu}{2},\frac{2}{s}\right)$. $Y = X^{-1}$ is said to have an inverted gamma of type 2 distribution, $Y\sim IG_2(\nu, s)$. 
+  Let $X>0$ be a real random variable with gamma-2 distribution, $X\sim G\left(\frac{\nu}{2},\frac{2}{s}\right)$. $Y = X^{-1}$ is said to have an inverted gamma of type 2 distribution, $Y\sim IG_2(\nu, s)$.
 \end{definition}
 
 \begin{proposition}\label{InvertedGamma2Density}
@@ -437,7 +437,7 @@ and by substitution in the first equation:
 \end{proposition}
 
 \begin{proof}[Proof of proposition \ref{InvertedGamma2Density}]
-  Direct from proposition \ref{InvertedGammaDensity} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+  Direct from proposition \ref{InvertedGammaDensity} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$.
 \end{proof}
 
 \begin{proposition}\label{InvertedGamma2Moments}
@@ -451,7 +451,7 @@ and by substitution in the first equation:
 \end{proposition}
 
 \begin{proof}[Proof of proposition \ref{InvertedGamma2Moments}]
-  Direct from proposition \ref{InvertedGammaMoments} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+  Direct from proposition \ref{InvertedGammaMoments} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$.
 \end{proof}
 
 The inverted gamma type II distribution is implemented in \Dynare\ as a prior, using the
@@ -461,7 +461,7 @@ two equations given in proposition \ref{InvertedGamma2Moments} for the scale and
 \begin{equation}
   \begin{split}
     s &= 2\mu\left(1+\frac{\mu^2}{\sigma^2}\right)\\
-    \nu &= 2\left(2+\frac{\mu^2}{\sigma^2}\right) 
+    \nu &= 2\left(2+\frac{\mu^2}{\sigma^2}\right)
   \end{split}
 \end{equation}
 
@@ -481,7 +481,7 @@ second moments, this difference does not matter.\newline
 Note that the mode is strictly positive and smaller than the expectation.
 
 \begin{proof}[Proof of proposition \ref{InvertedGamma2Moments}]
-  Direct from proposition \ref{InvertedGammaMode} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+  Direct from proposition \ref{InvertedGammaMode} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$.
 \end{proof}
 
 One can define the prior using the mode and the variance (or alternatively the
@@ -489,7 +489,7 @@ mode and the mean). Substituting the expression for the mode in the expression
 for $\sigma^2$ and rearranging we obtain the following cubic equation for $\nu$:
 
 \begin{equation}\label{InvertedGamma2Cubic}
-\varphi_{\delta}(\nu) \equiv \nu^3 - (8+\delta)\nu^2 + (20-4\delta)\nu - 16 -4\delta = 0 
+\varphi_{\delta}(\nu) \equiv \nu^3 - (8+\delta)\nu^2 + (20-4\delta)\nu - 16 -4\delta = 0
 \end{equation}
 where $\delta = 2\left(\nicefrac{m}{\sigma}\right)^2$.
 
@@ -534,7 +534,7 @@ In practice we instead usually define the priors over standard deviations, that 
 over the square root of the variance. This motivates the following definition.\newline
 
 \begin{definition}\label{InvertedGamma1}
-  Let $X>0$ be a real random variable with gamma distribution of type I, $X\sim G_1\left(\nu,s\right)$. $Y = X^{-1}$ is said to have an inverted gamma distribution of type I, $Y\sim IG_1(\nu, s)$. 
+  Let $X>0$ be a real random variable with gamma distribution of type I, $X\sim G_1\left(\nu,s\right)$. $Y = X^{-1}$ is said to have an inverted gamma distribution of type I, $Y\sim IG_1(\nu, s)$.
 \end{definition}
 
 \begin{proposition}\label{InvertedGamma1Density}
