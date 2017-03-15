@@ -2,6 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{nicefrac}
 
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}[section]
@@ -290,5 +291,367 @@ where $X~G_2(\nu, s)$. From proposition \ref{GammaDistribution:type2:moments}, w
  this shift affects the first order moment ($\mu=\alpha\beta+\delta$)
  and the mode (the same shift applies) but not the variance.\newline
 
+\section{Inverted Gamma distributions}\label{sec:InvertedGammaDistributions}
 
+\begin{definition}
+  Let $X$ be a gamma distributed random variable whith shape parameter $\alpha>0$ and scale parameter $\beta>0$. Then $Z = X^{-1}$ is said to be gamma inverted distributed, $Z\sim IG(\alpha, \beta)$.
+\end{definition}
+
+\begin{proposition}\label{InvertedGammaDensity}
+  The density of the continuous random variable $Z\sim IG(\alpha,\beta)$ is:
+  \[
+    f(z) = \mathcal C (\alpha, \beta)^{-1}x^{-\alpha-1}e^{-\frac{1}{\beta z}}
+  \]
+  where $\mathcal (\alpha, \beta) = \Gamma(\alpha)\beta^{\alpha}$ is the constant of integration.
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGammaDensity}]
+  Let $f_X$ denote the density of the gamma distribution with shape and scale parameters $\alpha>0$ and $\beta>0$, and define $h(x) = \frac{1}{x}$. The density of the inverted gamma distribution is defined as follows:
+  \[
+    \begin{split}
+      f(z) &= f_X(h^{-1}(z)) \times \left|\frac{\mathrm d}{\mathrm dz}h^{-1}(z)\right|\\
+      &= \mathcal C(\alpha, \beta)^{-1} \times z^{-\alpha+1}e^{-\frac{1}{\beta z}} \times \left|\frac{\mathrm d}{\mathrm dz}\frac{1}{z}\right|\\
+      &= \mathcal C(\alpha, \beta)^{-1} z^{-\alpha-1}e^{-\frac{1}{\beta z}}
+    \end{split}
+  \]
+\end{proof}
+
+\begin{proposition}\label{InvertedGammaMoments}
+  The expectation and variance of the continuous random variable $Z\sim IG(\alpha,\beta)$ are:
+  \[
+    \begin{split}
+      \mu &= \frac{1}{\beta(\alpha-1)}\\
+      \sigma^2 &= \frac{1}{\beta^2(\alpha-1)^2(\alpha-2)} \quad\text{for any }\alpha>2
+    \end{split}
+  \]
+\end{proposition}
+
+Note that the variance is not defined for $\alpha<2$, when equality holds the variance is infinite.\newline
+
+\begin{proof}[Proof of proposition \ref{InvertedGammaMoments}]
+  By definition of the probability density function of an Inverted Gamma distribution, we have:
+  \[
+    \begin{split}
+      \mu &= \mathcal C(\alpha, \beta)^{-1} \int_0^{\infty}z^{-\alpha}e^{-\frac{1}{\beta z}}\mathrm dz\\
+      &= \mathcal C(\alpha, \beta)^{-1} \int_0^{\infty}u^{\alpha-2}e^{-\frac{u}{\beta}}\mathrm du\\
+      &= \mathcal C(\alpha, \beta)^{-1} \mathcal C(\alpha-1, \beta)\\
+      &= \frac{\Gamma(\alpha-1)\beta^{\alpha-1}}{\Gamma(\alpha)\beta^{\alpha}}\\
+      &= \frac{\Gamma(\alpha-1)\beta^{\alpha-1}}{(\alpha-1)\Gamma(\alpha-1)\beta^{\alpha}}\\
+      &= \frac{1}{(\alpha-1)\beta}
+    \end{split}
+  \]
+  and
+  \[
+    \begin{split}
+      \mathbb E[Z^2] &= \mathcal C(\alpha, \beta)^{-1} \int_0^{\infty}z^{-\alpha+1}e^{-\frac{1}{\beta z}}\mathrm dz\\
+      &= \mathcal C(\alpha, \beta)^{-1} \int_0^{\infty}u^{\alpha-3}e^{-\frac{u}{\beta}}\mathrm du\\
+      &= \mathcal C(\alpha, \beta)^{-1} \mathcal C(\alpha-2, \beta)\\
+      &= \frac{\Gamma(\alpha-2)\beta^{\alpha-2}}{\Gamma(\alpha)\beta^{\alpha}}\\
+      &= \frac{\Gamma(\alpha-2)\beta^{\alpha-2}}{(\alpha-2)(\alpha-1)\Gamma(\alpha-2)\beta^{\alpha}}\\
+      &= \frac{1}{(\alpha-2)(\alpha-1)\beta^2}
+    \end{split}
+  \]
+  so that
+  \[
+    \begin{split}
+      \sigma^2 &= \frac{1}{(\alpha-2)(\alpha-1)\beta^2} - \frac{1}{(\alpha-1)^2\beta^2}\\
+      &= \frac{\alpha-1}{(\alpha-2)(\alpha-1)^2\beta^2} - \frac{\alpha-2}{(\alpha-2)(\alpha-1)^2\beta^2}\\
+      &= \frac{1}{\beta^2(\alpha-1)^2(\alpha-2)}
+    \end{split}
+  \]
+\end{proof}
+
+The system of equations defining the expectation and the variance can be solved
+for the shape and scale parameters:
+
+\begin{equation}
+  \begin{split}
+    \alpha &= 2 + \left(\frac{\mu}{\sigma}\right)^2\\
+    \beta &= \frac{1}{\mu \left[1+\left(\frac{\mu}{\sigma}\right)^2\right]}
+  \end{split}
+\end{equation}
+
+This distribution is not implemented in \Dynare, but two special cases presented in the next sub-section are implemented.\newline
+
+\begin{proposition}\label{InvertedGammaMode}
+  The mode of $Z\sim IG(\alpha,\beta)$ is strictly positive and smaller than the expectation:
+  \[
+    m = \frac{1}{\beta(1+\alpha)}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGammaMode}]
+  We have:
+  \[
+    \frac{\mathrm d}{\mathrm dz}f(z) = \mathcal C(\alpha,\beta)^{-1}z^{-\alpha-2}e^{-\frac{1}{\beta z}}\left\{\frac{1}{\beta z}-(1+\alpha)\right\}
+  \]
+  There exists only one positive value for $z$ such that this first derivative is zero:
+  \[
+    \frac{\mathrm d}{\mathrm dz}f(z) = 0 \quad \Leftrightarrow \quad z = \frac{1}{\beta(1+\alpha)}
+  \]
+\end{proof}
+
+Again one may prefer to define this distribution by specifying the mode and the
+variance (see below for the inverse gamma-2 distribution). Note that it is also
+possible to define this distribution by specifying the expectation and the mode. We have:
+
+\[
+  \begin{cases}
+    \mu &= \frac{1}{\beta(\alpha-1)}\\
+    m &= \frac{1}{\beta(1+\alpha)}
+  \end{cases}
+\]
+
+or equivalently
+
+\[
+  \begin{cases}
+    \mu &= \frac{1}{\beta(\alpha-1)}\\
+    m &= \mu\frac{\alpha-1}{\alpha+1}
+  \end{cases}
+\]
+
+Solving the second equation for $\alpha$ we obtain:
+
+\[
+\alpha = \left(1-\frac{m}{\mu}\right)^{-1}\left(\frac{m}{\mu}+1\right) = \frac{\mu+m}{\mu-m}
+\]
+
+and by substitution in the first equation:
+
+\[
+\beta = \frac{1}{2}\left(\frac{1}{m}-\frac{1}{\mu}\right) = \frac{\mu-m}{2\mu m}
+\]
+
+\subsection{Inverted Gamma of types 1 and 2}\label{sec:InvertedGammaDistributionsOfType1And2}
+
+\begin{definition}\label{InvertedGamma2}
+  Let $X>0$ be a real random variable with gamma-2 distribution, $X\sim G\left(\frac{\nu}{2},\frac{2}{s}\right)$. $Y = X^{-1}$ is said to have an inverted gamma of type 2 distribution, $Y\sim IG_2(\nu, s)$. 
+\end{definition}
+
+\begin{proposition}\label{InvertedGamma2Density}
+  The probability density function function of $Y\sim IG_2(\nu, s)$ is:
+  \[
+    f(y) = \mathcal C\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}y^{-\frac{\nu}{2}-1}e^{-\frac{s}{2 y}}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma2Density}]
+  Direct from proposition \ref{InvertedGammaDensity} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+\end{proof}
+
+\begin{proposition}\label{InvertedGamma2Moments}
+  The expectation and variance of $Y\sim IG_2(\nu, s)$ are:
+  \[
+    \begin{split}
+      \mu &= \frac{s}{\nu-2}\\
+      \sigma^2 &= \frac{2\mu^2}{\nu-4}
+    \end{split}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma2Moments}]
+  Direct from proposition \ref{InvertedGammaMoments} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+\end{proof}
+
+The inverted gamma type II distribution is implemented in \Dynare\ as a prior, using the
+keyword \verb+INV_GAMMA2_PDF+. The user has to specify $\mu$ and $\sigma$, and \Dynare\ solves the
+two equations given in proposition \ref{InvertedGamma2Moments} for the scale and shape parameters:
+
+\begin{equation}
+  \begin{split}
+    s &= 2\mu\left(1+\frac{\mu^2}{\sigma^2}\right)\\
+    \nu &= 2\left(2+\frac{\mu^2}{\sigma^2}\right) 
+  \end{split}
+\end{equation}
+
+This distribution is often used as a prior for the variance of a structural shock
+or measurement error. Note that the sole difference between an inverted gamma
+distribution and the inverted gamma type II distribution is in the parameterization of the
+shape and scale parameters. If the prior distribution is defined by its first and
+second moments, this difference does not matter.\newline
+
+\begin{proposition}\label{InvertedGamma2Mode}
+  The mode of $Y\sim IG_2(\nu, s)$ are:
+  \[
+    m = \frac{s}{\nu+2}
+  \]
+\end{proposition}
+
+Note that the mode is strictly positive and smaller than the expectation.
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma2Moments}]
+  Direct from proposition \ref{InvertedGammaMode} with $\alpha=\nicefrac{\nu}{2}$ and $\beta=\nicefrac{s}{2}$. 
+\end{proof}
+
+One can define the prior using the mode and the variance (or alternatively the
+mode and the mean). Substituting the expression for the mode in the expression
+for $\sigma^2$ and rearranging we obtain the following cubic equation for $\nu$:
+
+\begin{equation}\label{InvertedGamma2Cubic}
+\varphi_{\delta}(\nu) \equiv \nu^3 - (8+\delta)\nu^2 + (20-4\delta)\nu - 16 -4\delta = 0 
+\end{equation}
+where $\delta = 2\left(\nicefrac{m}{\sigma}\right)^2$.
+
+\begin{proposition}\label{InvertedGamma2SolveCubic}
+  The cubic equation \eqref{InvertedGamma2Cubic} has only one real solution greater than four.
+\end{proposition}
+
+Let $\nu^{\star}(\delta)$ be the pertinent root of $\varphi$. We then have $s^{\star} = m(\nu^{\star}(\delta)+2)$ by inverting
+the mode formula given in proposition \ref{InvertedGamma2Mode}.
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma2SolveCubic}]
+  Let $\bar\nu_1(\delta)$ and $\bar\nu_2(\delta)$ be the roots of the
+  second order polynomial $\varphi_{\delta}'(\nu)$. These roots are
+  given by:
+  \[
+    \bar\nu_1(\delta) = \frac{16+2\delta-2\sqrt{\delta^2+28\delta+4}}{6}\leq 2 \quad \forall \delta\geq 0
+  \]
+  and
+  \[
+    \bar\nu_2(\delta) = \frac{16+2\delta+2\sqrt{\delta^2+28\delta+4}}{6}\geq \frac{10}{3} \quad \forall \delta\geq 0
+  \]
+  Note that, since the coefficient associated to $\nu^2$ in
+  $\varphi_{\delta}'(\nu)$ is equal to 3, $\varphi_{\delta}'(\nu)$ is
+  negative if and only if $\nu$ is betwween the two roots.  Let
+  $\tilde\nu(\delta) = \frac{8}{3}+\frac{\delta}{3}$ be the root of
+  $\varphi_{\delta}''(\nu)$, we must have:
+  \[
+    \bar\nu_1(\delta) < \tilde\nu(\delta) < \bar\nu_2(\delta)
+  \]
+  for any admissible value of $\delta$. As a consequence we have $\varphi_{\delta}'(\tilde\nu(\delta))<0$, and because:
+  \[
+    \varphi_{\delta}(\tilde\nu(\delta)) = -(8+\delta)\frac{68\delta+\delta^2}{27}-\frac{16}{27}-\frac{56}{27}\delta <0 \quad \forall \delta
+  \]
+  we necessarily have $\varphi_{\delta}(\bar\nu_2(\delta))<0$. Knowing
+  that $\varphi_{\delta}(\nu)$ is monotone increasing in
+  $[\bar\nu_2(\delta), \infty)$ and
+  $\varphi_{\delta}(4) = -36\delta \leq 0$, the biggest root of the
+  third order polynomial has to be greater than four.
+\end{proof}
+
+In practice we instead usually define the priors over standard deviations, that is
+over the square root of the variance. This motivates the following definition.\newline
+
+\begin{definition}\label{InvertedGamma1}
+  Let $X>0$ be a real random variable with gamma distribution of type I, $X\sim G_1\left(\nu,s\right)$. $Y = X^{-1}$ is said to have an inverted gamma distribution of type I, $Y\sim IG_1(\nu, s)$. 
+\end{definition}
+
+\begin{proposition}\label{InvertedGamma1Density}
+  The probability density function function of $Y\sim IG_1(\nu, s)$ is:
+  \[
+    f(y) = \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}y^{-\nu-1}e^{-\frac{s}{2 y^2}}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma1Density}]
+  Let $X$ be distributed as a gamma of type I, and $f_X(x)$ be its
+  probability density function. Define $h(x) = \nicefrac{1}{x}$. The
+  density of the inverted gamma distribution of type I is defined as
+  follows:
+  \[
+    \begin{split}
+      f(y) &= f_X\left(h^{-1}(y)\right) \times \left|\frac{\mathrm d}{\mathrm dy}h^{-1}(y)\right|\\
+      &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}y^{-\nu+1}e^{-\frac{s}{2 y^2}}\frac{1}{y^2}\\
+      &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}y^{-\nu-1}e^{-\frac{s}{2 y^2}}\\
+    \end{split}
+  \]
+\end{proof}
+
+\begin{proposition}\label{InvertedGamma1Moments}
+  The expectation and variance of $Y\sim IG_1(\nu, s)$ are:
+  \[
+    \begin{split}
+      \mu &= \sqrt{\frac{s}{2}}\frac{\Gamma\left(\frac{\nu-1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)}\\
+      \sigma^2 &= \frac{s}{\nu-2}-\mu^2
+    \end{split}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma1Moments}]
+  The first order moment is defined by:
+  \[
+    \begin{split}
+      \mu &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1} \int_0^{\infty}yy^{-\nu-1}e^{-\frac{s}{2y^2}}\mathrm dy\\
+      &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}\frac{1}{2} \int_0^{\infty} x^{\frac{\nu}{2}-\frac{1}{2}-1}e^{-\frac{s}{2}x}\mathrm d x\\
+      &= \mathcal C\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1} \int_0^{\infty} x^{\frac{\nu-1}{2}-1}e^{-\frac{s}{2}x}\mathrm d x\\
+      &= \frac{\Gamma(\frac{\nu-1}{2})\left(\frac{2}{s}\right)^{\frac{\nu-1}{2}}}{\Gamma(\frac{\nu}{2})\left(\frac{2}{s}\right)^{\frac{\nu}{2}}}\\
+      &= \sqrt{\frac{s}{2}}\frac{\Gamma(\frac{\nu-1}{2})}{\Gamma(\frac{\nu}{2})}
+    \end{split}
+  \]
+  The second order raw moment is defined by:
+  \[
+    \begin{split}
+      \mathbb E \left[Y^2\right] &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1} \int_0^{\infty}y^2y^{-\nu-1}e^{-\frac{s}{2y^2}}\mathrm dy\\
+      &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1} \int_0^{\infty}y^{-\nu+1}e^{-\frac{s}{2y^2}}\mathrm dy\\
+      &= \widetilde{\mathcal C}\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1}\frac{1}{2} \int_0^{\infty}x^{-\frac{\nu}{2}-2}e^{-\frac{s}{2}x}\mathrm dx\\
+      &= \mathcal C\left(\frac{\nu}{2}, \frac{2}{s}\right)^{-1} \int_0^{\infty}x^{-\frac{\nu}{2}-2}e^{-\frac{s}{2}x}\mathrm dx\\
+      &= \frac{\Gamma\left(\frac{\nu}{2}-1\right)\left(\frac{2}{s}\right)^{\frac{\nu}{2}-1}}{\Gamma\left(\frac{\nu}{2}\right)\left(\frac{2}{s}\right)^{\frac{\nu}{2}}}\\
+      &= \frac{s}{2} \frac{\Gamma\left(\frac{\nu}{2}-1\right)} {\frac{\nu-2}{2}\Gamma\left(\frac{\nu}{2}-1\right)}\\
+      &= \frac{s}{\nu-2}
+    \end{split}
+  \]
+\end{proof}
+
+The inverted gamma distribution of type I is implemented in \Dynare\
+as a prior (using the keywords \verb+INV_GAMMA1_PDF+ or
+\verb+INV_GAMMA_PDF+). The user has to specify $\mu$ and $\sigma$, and
+\Dynare\ solves the equations given in proposition
+\ref{InvertedGamma1Moments} for the scale and shape parameters $\nu$
+and $s$. There is no closed form solution in this case, a numerical
+approach is used. \Dynare\ first solves the following equation for $\nu$:
+\[
+2\Gamma\left(\frac{\nu}{2}\right)^2\mu^2 = (\sigma^2 + \mu^2)(\nu-2)\Gamma\left(\frac{\nu-1}{2}\right)^2
+\]
+and then computes
+\[
+s = (\sigma^2 + \mu^2)(\nu-2)
+\]
+This is done in the Matlab function \verb+inverse_gamma_specification.m+. Note that in the case
+of an infinite variance we have a closed form solution for $\nu$ and $s$:
+\[
+  \begin{split}
+    \nu = 2\\
+    s = \frac{2}{\pi}\mu^2
+  \end{split}
+\]
+
+\begin{proposition}\label{InvertedGamma1Mode}
+  The mode of $Y\sim IG_1(\nu, s)$ is:
+  \[
+    m = \sqrt{\frac{\nu-1}{s}}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{InvertedGamma1Mode}]
+  We have:
+  \[
+    \frac{\mathrm d}{\mathrm d y} f(y) \propto y^{\nu}e^{-\frac{s}{2}y^2}\left(\frac{\nu-1}{y^2}-s\right)
+  \]
+  which is zero if and only if $y = m$.
+\end{proof}
+
+Again one can define the prior using the mode and the
+variance. Substituting the expression for the mode in the expression
+for $\sigma^2$ and rearranging we obtain:
+\[
+\sigma^2m^2 = \frac{\nu-1}{\nu-2} - \frac{\nu-1}{2} \left(\frac{\Gamma\left(\frac{\nu-1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)}\right)^2
+\]
+\Dynare\ numerically solves this equation for $\nu$ and computes
+$s = \nicefrac{\nu-1}{m^2}$. Note that in the case of an infinite
+variance we have a closed form solution:
+\[
+  \begin{split}
+    \nu &= 2\\
+    s &= \frac{1}{m^2}
+  \end{split}
+\]
+
+The inverse gamma distribution of type I (type II) is usually used as
+a prior for the standard deviation (resp. variance) of a structural
+(or measurement) shock. The rational is that in linear model with
+gaussian noise, the Normal (for the parameters) – Inverse Gamma
+(for the variance of the error) prior is conjugate. Obviously this is
+not true for DSGE models, there is no computational advantage in
+choosing the inverse gamma prior.
 \end{document}
