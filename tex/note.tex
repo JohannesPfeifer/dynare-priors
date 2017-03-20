@@ -682,4 +682,218 @@ gaussian noise, the Normal (for the parameters) – Inverse Gamma
 not true for DSGE models, there is no computational advantage in
 choosing the inverse gamma prior.
 
+\subsection{Beta distributions}\label{sec:BetaDistributions}
+
+\begin{definition}\label{BetaFunction}
+  The beta function is defined as follows:
+  \[
+    B(\alpha, \beta) = \int_0^1 x^{\alpha-1}(1-x)^{\beta-1}\mathrm dx
+  \]
+  with $(\alpha,\beta)\in\mathbb R_+^2$.
+\end{definition}
+
+\begin{proposition}\label{BetaAndGammaFunctions}
+  The beta function can be written using the gamma function:
+  \[
+    B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{BetaAndGammaFunctions}]
+  From the definition of the gamma function
+  \[
+    \begin{split}
+      \Gamma(\alpha)\Gamma(\beta) &= \int_{0}^{\infty}\ e^{-x} x^{\alpha-1}\mathrm dx \times \int_{0}^{\infty}\ e^{-y} y^{\beta-1}\mathrm dy \\
+      &= \int_{0}^{\infty}\int_{0}^{\infty}  \ e^{-x-y} x^{\alpha-1}y^{\beta-1}\mathrm dx\mathrm dy
+    \end{split}
+  \]
+  We consider the following change of variables:
+  \[
+    \begin{pmatrix}
+      x\\
+      y
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      z t \\
+      z (1-t)
+    \end{pmatrix}
+    \equiv \varphi(z, t)
+  \]
+  with $t\in[0,1]$. The jacobian matrix associated to this change of variables is:
+  \[
+    J_{\varphi}(z,t) =
+    \begin{pmatrix}
+      t & z \\
+      (1-t) & -z
+    \end{pmatrix}
+  \]
+  and its determinant:
+  \[
+    \left|J_{\varphi}(z,t)\right| = -tz-z(1-t) = -z
+  \]
+  So that we have:
+  \[
+    \begin{split}
+      \Gamma(\alpha)\Gamma(\beta) &= \int_{0}^{\infty}\int_{0}^{1}  \ e^{-z} (tz)^{\alpha-1}\left((1-t)z\right)^{\beta-1}z\mathrm dt\mathrm dz \\
+      &= \int_{0}^{\infty} \ e^{-z} z^{\alpha+\beta-1}\mathrm dz \int_{0}^{1} t^{\alpha}(1-t)^{\beta}\mathrm dt\\
+      &= \Gamma(\alpha+\beta)B(\alpha,\beta)
+    \end{split}
+  \]
+  \end{proof}
+
+\begin{proposition}\label{BetaDensity}
+  Let $X\sim G(\alpha, \gamma)$ and $Y\sim G(\beta, \gamma)$ be two independent
+  random variables.The random variable $Z = \nicefrac{X}{X+Y}$ is said
+  to be beta distributed, $Z\sim \mathcal B(\alpha,\beta)$,and its
+  density function is given by:
+  \[
+    f(z)=B(\alpha,\beta)^{-1}z^{\alpha-1}(1-z)^{\beta-1}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{BetaDensity}]
+  Let $S = X+Y$ be a random variable. We will characterise the joint
+  density of $(S,Z)$ and show that these two random variables are
+  independent. The joint density of $(X,Y)$ is given by:
+  \[
+    \begin{split}
+      f_{X,Y}(x,y) &= \frac{\gamma^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\gamma x} \times \frac{\gamma^{\beta}}{\Gamma(\beta)}y^{\beta-1}e^{-\gamma y}\\
+      &= \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha)\Gamma(\beta)}e^{-\gamma (x+y)}x^{\alpha-1}y^{\beta-1}\\
+      &= \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha+\beta)}e^{-\gamma (x+y)}B(\alpha,\beta)^{-1}x^{\alpha-1}y^{\beta-1}
+    \end{split}
+  \]
+  because $X$ and $Y$ are independent random variables, and using proposition \ref{BetaAndGammaFunctions}. By
+  construction, since $X$ and $Y$ can take values on the positive real
+  line, the random variables $S$ and $Z$ are respectively defined over
+  $[0,\infty)$ and $[0,1]$. The function mapping $(x,y)$ to $(s,z)$,
+  denoted $\varphi(x,y)$, can be inverted as follows:
+  \[
+    \begin{pmatrix}
+      x\\
+      y
+    \end{pmatrix}
+    =
+    \varphi^{-1}(s,z)
+    =
+    \begin{pmatrix}
+      sz\\
+      s(1-z)
+    \end{pmatrix}
+  \]
+  so we should be able to identify the densities of a gamma and a beta
+  distributions in the last expression for the joint density of
+  $(X, Y)$. The jacobian matrix associated to the change of variables
+  function $\varphi^{-1}$ is given by:
+  \[
+    J_{\varphi^{-1}}(x,y) =
+    \begin{pmatrix}
+      z & s \\
+      1-z & -s
+    \end{pmatrix}
+  \]
+  and its determinant is:
+  \[
+    \left|J_{\varphi^{-1}}(s,z)\right| = -zs-s(1-z) = -s
+  \]
+  Hence the joint density of $(S,Z)$ is
+  \[
+    \begin{split}
+      f_{S,Z}(s,z) &= \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha+\beta)}e^{-\gamma s}B(\alpha,\beta)^{-1}(sz)^{\alpha-1}(s(1-z))^{\beta-1}s\\
+      &= \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha+\beta)}e^{-\gamma s}s^{\alpha+\beta-1}B(\alpha,\beta)^{-1}z^{\alpha-1}(1-z)^{\beta-1}
+    \end{split}
+  \]
+  Noting that this joint density is separable with respect to  $s$ and $z$, we have the marginal densities for $S$ and $Z$:
+  \[
+    f_S(s) = \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha+\beta)}e^{-\gamma s}s^{\alpha+\beta-1}
+  \]
+  and
+  \[
+    f_Z(z) = B(\alpha,\beta)^{-1}z^{\alpha-1}(1-z)^{\beta-1}
+  \]
+  We recognise $f_S(s)$ as the density of a gamma random variable with
+  shape parameter $\alpha+\beta$ and scale parameter $\gamma$,
+  $S\sim \Gamma(\alpha+\beta,\gamma)$. The remaining terms correspond
+  to the density of the beta distribution.
+\end{proof}
+
+\begin{proposition}\label{BetaMoments}
+  The expectation and variance of $Z\sim \mathcal B(\alpha, \beta)$ are:
+  \[
+    \begin{split}
+      \mu &= \frac{\alpha}{\alpha+\beta}\\
+      \sigma^2 &= \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
+    \end{split}
+  \]
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{BetaMoments}]
+  The expectation is defined by:
+  \[
+    \begin{split}
+      \mu &= \int_0^1 B(\alpha,\beta)^{-1}z^{\alpha}(1-z)^{\beta-1}\mathrm dz\\
+      &= B(\alpha,\beta)^{-1}B(\alpha+1,\beta)\\
+      &= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\frac{\alpha\Gamma(\alpha)\Gamma(\beta)}{(\alpha+\beta)\Gamma(\alpha+\beta)}\\
+      &= \frac{\alpha}{\alpha+\beta}
+    \end{split}
+  \]
+  The raw second order moment is given by:
+  \[
+    \begin{split}
+      \mathbb E[Z^2] &= \int_0^1 B(\alpha,\beta)^{-1}z^{\alpha+1}(1-z)^{\beta-1}\mathrm dz\\
+      &= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\frac{(\alpha+1)\alpha\Gamma(\alpha)\Gamma(\beta)}{(\alpha+\beta+1)(\alpha+\beta)\Gamma(\alpha+\beta)}\\
+      &= \frac{(\alpha+1)\alpha}{(\alpha+\beta+1)(\alpha+\beta)}
+    \end{split}
+  \]
+  So that the variance is:
+  \[
+    \begin{split}
+      \sigma^2 &= \frac{(\alpha+1)\alpha}{(\alpha+\beta+1)(\alpha+\beta)}-\frac{\alpha^2}{(\alpha+\beta)^2}\\
+      &= \frac{(\alpha+1)(\alpha+\beta)\alpha-\alpha^2(\alpha+\beta+1)}{(\alpha+\beta+1)(\alpha+\beta)^2}\\
+      &= \frac{\alpha\beta}{(\alpha+\beta+1)(\alpha+\beta)^2}
+    \end{split}
+  \]
+\end{proof}
+
+We can deduce the hyperparameters, $\alpha$ and $\beta$, of the beta distribution from these two moments. We have:
+\[
+  \begin{split}
+    \alpha &=  (1-\mu)\left(\frac{\mu}{\sigma}\right)^2 - \mu^2\\
+    \beta  &= \left(\frac{(1-\mu)\mu}{\sigma^2}-1\right)(1-\mu)
+  \end{split}
+\]
+
+\begin{proposition}\label{BetaMode}
+  If the hyper-parameters $\alpha>1$ and $\beta>1$ the mode of the beta distribution is unique and given by:
+  \[
+    m = \frac{\alpha-1}{\alpha+\beta-2}
+  \]
+  If $\alpha=\beta=1$, then the beta distribution collapses to uniform
+  distribution and has an infinity of modes. If $\alpha<1$ the beta
+  distribution has a mode in zero (the density is not finite in 0). If
+  $\beta<1$, the beta distribution has a mode in one (the density is
+  not finite in 1). If both hyper-parameters are less than one, the
+  beta distribution has two modes in 0 and 1. If $\alpha=1$ and
+  $\beta>1$, the density decreases monotonically between 0 and 1, the
+  mode is in 0 where the density is finite. If $\beta=1$ and
+  $\alpha>1$, the density increases monotonically between 0 and 1, the
+  mode is in 1 where the density is finite.
+\end{proposition}
+
+\begin{proof}[Proof of proposition \ref{BetaMode}]
+  We focus in the case where we have a unique interior mode (other cases are obvious), i.e. $\alpha>1$ and $\beta>1$. We have:
+  \[
+    \frac{\mathrm d}{\mathrm dz} f(z) \propto z^{\alpha-1}(1-z)^{\beta-1}\left[\frac{\alpha-1}{z}-\frac{\beta-1}{1-a}\right]
+  \]
+  This derivative is zero if and only if the term between bracket is zero, i.e.
+  \[
+    \begin{split}
+      \frac{z}{1-\alpha} &= \frac{1-z}{\beta-1} \\
+      \Leftrightarrow z &= \frac{\alpha-1}{\alpha+\beta-2}
+    \end{split}
+  \]
+\end{proof}
+
+Again, it is possible to compute the hyper-parameters from the mode and variance, solving a cubic equation.
+
 \end{document}
