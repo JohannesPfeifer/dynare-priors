@@ -10,7 +10,7 @@ note.pdf: note.tex
 	done
 
 clean:
-	rm -f note.aux  note.log
+	rm -f note.aux note.log note.out
 	rm -rf auto
 
 clean-all: clean
